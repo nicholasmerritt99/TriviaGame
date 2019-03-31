@@ -70,6 +70,15 @@ $(document).ready(function(){
                 trivia.timerId = setInterval(trivia.timerRunning, 1000);
               }
 
+            var questionsContent = Object.values(trivia.questions)[trivia.currentSet];
+            $('#question').text(questionsContent);
+
+            var questionOptions = Object.values(trivia.options)[trivia.currentSet];
+              $.each(questionOptions, function(index, key){
+                $('#options').append($('<button class="option btn btn-info btn-lg">'+key+'</button>'));
+              })
+        },
+
         },
 
 
