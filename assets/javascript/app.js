@@ -1,3 +1,13 @@
+$(document).ready(function(){
+  
+    
+    $("#remaining-time").hide();
+    $("#start").on('click', trivia.startGame);
+    $(document).on('click' , '.option', trivia.guessChecker);
+    
+  })
+
+
 
     var trivia = {
         correct: 0,
@@ -34,7 +44,7 @@
           q5: 'Hawkeye',
           q6: 'Doctor',
           q7: '6'
-        }}
+        },
 
         startGame: function(){
             trivia.currentSet = 0;
@@ -49,7 +59,18 @@
             $('#start').hide();
             $('#remaining-time').show();
             trivia.nextQuestion();
-          }
+          },
+
+        nextQuestion: function(){
+            trivia.timer = 20;
+            $('#timer').removeClass('last-seconds');
+            $('#timer').text(trivia.timer);
+
+            if(!trivia.timerOn){
+                trivia.timerId = setInterval(trivia.timerRunning, 1000);
+              }
+
+        },
 
 
 
@@ -68,4 +89,5 @@
 
 
 
-        
+
+
