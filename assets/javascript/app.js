@@ -55,7 +55,7 @@ $(document).ready(function(){
 
             $('#game').show();
             $('#results').html('');
-            $('#timer').text(trivia.timer);
+            $('#gametime').text(trivia.timer);
             $('#start').hide();
             $('#remaining-time').show();
             trivia.nextQuestion();
@@ -63,11 +63,11 @@ $(document).ready(function(){
 
         nextQuestion: function(){
             trivia.timer = 20;
-            $('#timer').removeClass('last-seconds');
-            $('#timer').text(trivia.timer);
+            $('#gametime').removeClass('last-seconds');
+            $('#gametime').text(trivia.timer);
 
             if(!trivia.timerOn){
-                trivia.timerId = setInterval(trivia.timerRunning, 1000);
+                trivia.timerId = setInterval(trivia.runTimer, 1000);
               }
 
             var questionsContent = Object.values(trivia.questions)[trivia.currentSet];
@@ -79,6 +79,52 @@ $(document).ready(function(){
               })
         },
 
+        runTimer: function(){
+
+          if(trivia.timer > -1 && trivia.currentSet < Object.key(trivia.questions).length){
+            $('#gametime').text(trivia.timer);
+            trivia.timer --;
+          } else if(trivia.timer == -1){
+            trivia.unanswered ++;
+            trivia.result = false;
+            clearInterval(trivia.timerId);
+            resultId = setTimeout(trivia.guessResult, 1000);
+            $('#results').html('<h3>Times up! The answer was '+ Object.values(trivia.answers)[trivia.currentSet] +'</h3>');
+          } else if(trivia.currentSet === Object.keys(trivia.questions).length){
+            $('#results')
+            .html('<h3>Thank you for playing!</h3>'+
+            '<p>Correct: '+ trivia.correct +'</p>'+
+            '<p>Incorrect: '+ trivia.incorrect +'</p>'+
+            '<p>Unaswered: '+ trivia.unanswered +'</p>');
+
+            $('#game').hide();
+            $('#start').show();
+          }
+
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         },
 
 
